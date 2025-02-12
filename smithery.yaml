@@ -1,0 +1,33 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - deepseekApiKey
+      - minimaxApiKey
+      - minimaxGroupId
+      - elevenlabsApiKey
+      - replicateApiToken
+    properties:
+      deepseekApiKey:
+        type: string
+        description: API key for DeepSeek service.
+      minimaxApiKey:
+        type: string
+        description: API key for MiniMax service.
+      minimaxGroupId:
+        type: string
+        description: Group ID for MiniMax service.
+      elevenlabsApiKey:
+        type: string
+        description: API key for ElevenLabs service.
+      replicateApiToken:
+        type: string
+        description: API token for Replicate service.
+  commandFunction:
+    # A function that produces the CLI command to start the MCP on stdio.
+    |-
+    (config) => ({ command: 'npm', args: ['run', 'start'], env: { DEEPSEEK_API_KEY: config.deepseekApiKey, MINIMAX_API_KEY: config.minimaxApiKey, MINIMAX_GROUP_ID: config.minimaxGroupId, ELEVENLABS_API_KEY: config.elevenlabsApiKey, REPLICATE_API_TOKEN: config.replicateApiToken } })
